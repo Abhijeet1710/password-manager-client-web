@@ -6,25 +6,12 @@ import { RiSearch2Line } from "react-icons/ri";
 
 function Home({ setUser, user, setLogin }) {
   let [isOpen, setIsOpen] = useState(false);
-  let [data, setData] = useState([]);
+  let [data, setData] = useState(user.data);
 
-   useEffect(() => {
-    axios.post('/info', {
-        id : user._id
-      })
-      .then(function (response) {
-        alert("site added sucessfully !");
-        setData(response.data.user.data);
-      })
-      .catch(function (error) {
-        alert("some error !");
-        console.log(error);
-      });
-  }, []);
-
-  function closeModal() {
+  function addItem() {
     let siteName = document.querySelector("#ipSiteName").value;
     let sitePassword = document.querySelector("#ipPassword").value;
+    if(siteName === "" || sitePassword === "") {setIsOpen(false); return;}
     const siteData = {
           siteName : siteName,
           sitePassword : sitePassword
@@ -34,20 +21,31 @@ function Home({ setUser, user, setLogin }) {
         siteData : siteData,
         userId : user._id
       })
-      .then(function (response) {
-        alert("site added sucessfully !");
-      })
       .catch(function (error) {
-        alert("some error !");
+        alert(error);
       });
+    console.log("cl");
 
+    user.data.push(siteData);
+    setUser(user);
     setIsOpen(false);
   }
 
-  function openModal() {
-    setIsOpen(true);
-  }
+  function realTimeSearch() {
+    let text = document.querySelector("#textToSearch").value.toLowerCase();
 
+      let filteredData = [];
+      user.data.forEach((singleD) => { 
+          // console.log(singleD);
+          if(singleD.siteName.toLowerCase().includes(text)) {
+              filteredData.push(singleD);
+          }
+      });
+      // user.data.push(siteData);
+      // setUser(user);
+      setData(filteredData);
+      console.log(filteredData);
+  }
 
   return (
     <>
@@ -58,6 +56,8 @@ function Home({ setUser, user, setLogin }) {
               <input
                 className="w-full outline-none font-medium"
                 placeholder="Type here to search"
+                id="textToSearch"
+                onChange={realTimeSearch}
               ></input>
             </div>
             <div className="flex items-center">
@@ -75,7 +75,7 @@ function Home({ setUser, user, setLogin }) {
           <div className="">
             <button
               type="button"
-              onClick={openModal}
+              onClick={ () => setIsOpen(true) }
               className="px-4 py-2 text-sm font-medium rounded-md text-white bg-blue-800 hover:bg-blue-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
             >
               Add Item
@@ -93,12 +93,14 @@ function Home({ setUser, user, setLogin }) {
           </p>
         </div>
       </div>
+
+
       {/*  Modal */}
       <Transition appear show={isOpen} as={Fragment}>
         <Dialog
           as="div"
-          className="fixed inset-0 z-10 overflow-y-auto"
-          onClose={closeModal}
+          className="fixed inset-0 z-10 overflow-y-auto mt-8"
+          onClose={addItem}
         >
           <div className="min-h-screen px-4 text-center">
             <Transition.Child
@@ -113,13 +115,14 @@ function Home({ setUser, user, setLogin }) {
               <Dialog.Overlay className="fixed inset-0" />
             </Transition.Child>
 
-            {/* This element is to trick the browser into centering the modal contents. */}
+            {/* This element is to trick the browser into centering the modal contents. 
             <span
-              className="inline-block h-screen align-middle"
+              className="inline-block h-screen my-10"
               aria-hidden="true"
             >
               &#8203;
             </span>
+          */}
             <Transition.Child
               as={Fragment}
               enter="ease-out duration-300"
@@ -129,7 +132,7 @@ function Home({ setUser, user, setLogin }) {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <div className="inline-block w-full max-w-xl p-6 overflow-hidden text-left transition-all transform bg-white shadow-xl rounded-lg">
+              <div className="inline-block w-full max-w-xl p-10 overflow-hidden text-left transition-all transform bg-white shadow-xl rounded-lg">
                 <Dialog.Title
                   as="h3"
                   className="text-lg font-medium leading-6 text-gray-900 mb-4"
@@ -158,10 +161,10 @@ function Home({ setUser, user, setLogin }) {
                 <div className="mt-4">
                   <button
                     type="button"
-                    className="inline-flex justify-center px-4 py-2 text-sm font-medium text-blue-900 bg-blue-100 border border-transparent rounded-md hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
-                    onClick={closeModal}
+                    className="inline-flex justify-center px-4 py-2 mt-2 text-sm font-medium text-white bg-blue-900 rounded-md hover:bg-blue-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
+                    onClick={addItem}
                   >
-                    Got it, thanks!
+                    Add Item
                   </button>
                 </div>
               </div>
