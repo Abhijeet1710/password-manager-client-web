@@ -1,7 +1,6 @@
 {
   "name": "web",
   "version": "0.1.0",
-  "private": true,
   "proxy": "https://passwordmanager-api.herokuapp.com", 
   "dependencies": {
     "@craco/craco": "^6.2.0",
