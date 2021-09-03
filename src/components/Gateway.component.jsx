@@ -12,7 +12,7 @@ function Gateway({ isLogedIn, setLogin, setUser, user }) {
     let masterPassword = document.querySelector("#ipMasterPassword").value;
     let email = document.querySelector("#ipEmail").value;
 
-    axios.post('/user/login', {
+    axios.post('https://passwordmanager-api.herokuapp.com/user/login', {
         userName: userName,
         masterPassword: masterPassword,
         email: email,
