@@ -10,7 +10,7 @@ function ListHome({ site }) {
       <div className="flex justify-between group hover:bg-gray-300 rounded-md p-2">
 
               <div className="flex items-center gap-6">
-                  <SiTencentqq className="invisible group-hover:visible w-6 h-6" />
+                  <SiTencentqq className="md:invisible group-hover:visible w-5 h-5 " />
                   <div>
                     <h1 className="cursor-pointer hover:underline text-blue-800 font-medium text-lg">
                       {site.siteName}

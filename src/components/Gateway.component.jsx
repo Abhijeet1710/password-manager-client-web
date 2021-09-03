@@ -48,7 +48,7 @@ function Gateway({ isLogedIn, setLogin, setUser, user }) {
 
   return (
     <>
-      <div className="max-w-md mx-auto">
+      <div className="px-2 max-w-md mx-auto">
         <div className="py-10">
           <div className="text-center">
             <div className="w-60 h-10 mx-auto">

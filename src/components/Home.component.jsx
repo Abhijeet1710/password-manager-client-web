@@ -49,7 +49,7 @@ function Home({ setUser, user, setLogin }) {
 
   return (
     <>
-      <div className="bg-fixed">
+      <div className="bg-fixed px-2">
         <div className="flex max-w-lg mx-auto justify-center py-10">
           <div className="flex bg-white p-3 w-full rounded-md shadow-lg ">
             <div className="w-full px-2">
@@ -67,7 +67,7 @@ function Home({ setUser, user, setLogin }) {
         </div>
       </div>
 
-      <div className="max-w-md mx-auto">
+      <div className="max-w-md mx-auto px-3">
         <div className="flex justify-between">
           <div className="">
             <h2 className="text-2xl font-medium">My vault</h2>
@@ -76,7 +76,7 @@ function Home({ setUser, user, setLogin }) {
             <button
               type="button"
               onClick={ () => setIsOpen(true) }
-              className="px-4 py-2 text-sm font-medium rounded-md text-white bg-blue-800 hover:bg-blue-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
+              className="px-4 py-2 text-sm font-medium rounded-full md:rounded-md text-white bg-blue-800 hover:bg-blue-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
             >
               Add Item
             </button>
@@ -132,7 +132,7 @@ function Home({ setUser, user, setLogin }) {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <div className="inline-block w-full max-w-xl p-10 overflow-hidden text-left transition-all transform bg-white shadow-xl rounded-lg">
+              <div className="inline-block w-full max-w-xl p-10 overflow-hidden text-left transition-all transform bg-white shadow-xl rounded-3xl md:rounded-lg">
                 <Dialog.Title
                   as="h3"
                   className="text-lg font-medium leading-6 text-gray-900 mb-4"
@@ -161,7 +161,7 @@ function Home({ setUser, user, setLogin }) {
                 <div className="mt-4">
                   <button
                     type="button"
-                    className="inline-flex justify-center px-4 py-2 mt-2 text-sm font-medium text-white bg-blue-900 rounded-md hover:bg-blue-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
+                    className="inline-flex justify-center px-4 py-2 mt-2 text-sm font-medium text-white bg-blue-900 rounded-full md:rounded-md hover:bg-blue-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
                     onClick={addItem}
                   >
                     Add Item
