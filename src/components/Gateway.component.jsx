@@ -39,7 +39,7 @@ function Gateway({ isLogedIn, setLogin, setUser, user }) {
         email: email,
       })
       .then(function (response) {
-        alert("you can log in now");
+        alert("Account created sucessfully !");
       })
       .catch(function (error) {
         console.log(error);
