@@ -3,15 +3,31 @@ import axios from "axios";
 import { Dialog, Transition } from "@headlessui/react";
 import ListHome from "./ListHome.components";
 import { RiSearch2Line } from "react-icons/ri";
+import { IoMdClose } from "react-icons/io";
 
 function Home({ setUser, user, setLogin }) {
   let [isOpen, setIsOpen] = useState(false);
   let [data, setData] = useState(user.data);
 
+  function closeModal() {
+    document.querySelector("#bg").className = "";
+    setIsOpen(false);
+  }
+
+  function openModal() {
+    // make bg blur
+    let classes = document.querySelector("#bg").className.toString();
+    // classes += "filter blur-sm";
+    classes += "filter blur-lg"
+    document.querySelector("#bg").className = classes;
+    setIsOpen(true);
+  }
+
   function addItem() {
+
     let siteName = document.querySelector("#ipSiteName").value;
     let sitePassword = document.querySelector("#ipPassword").value;
-    if(siteName === "" || sitePassword === "") {setIsOpen(false); return;}
+    if(siteName === "" || sitePassword === "") {alert("Fill all data"); return;}
     const siteData = {
           siteName : siteName,
           sitePassword : sitePassword
@@ -28,7 +44,7 @@ function Home({ setUser, user, setLogin }) {
 
     user.data.push(siteData);
     setUser(user);
-    setIsOpen(false);
+    closeModal();
   }
 
   function realTimeSearch() {
@@ -49,6 +65,8 @@ function Home({ setUser, user, setLogin }) {
 
   return (
     <>
+
+    <div className="" id="bg">
       <div className="bg-fixed px-2">
         <div className="flex max-w-lg mx-auto justify-center py-10">
           <div className="flex bg-white p-3 w-full rounded-md shadow-lg ">
@@ -75,7 +93,7 @@ function Home({ setUser, user, setLogin }) {
           <div className="">
             <button
               type="button"
-              onClick={ () => setIsOpen(true) }
+              onClick={ openModal }
               className="px-4 py-2 text-sm font-medium rounded-full md:rounded-md text-white bg-blue-800 hover:bg-blue-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
             >
               Add Item
@@ -93,14 +111,14 @@ function Home({ setUser, user, setLogin }) {
           </p>
         </div>
       </div>
-
+    </div>
 
       {/*  Modal */}
       <Transition appear show={isOpen} as={Fragment}>
         <Dialog
           as="div"
-          className="fixed inset-0 z-10 overflow-y-auto mt-8"
-          onClose={addItem}
+          className="fixed inset-0 z-10 overflow-y-auto"
+          onClose={closeModal}
         >
           <div className="min-h-screen px-4 text-center">
             <Transition.Child
@@ -114,36 +132,38 @@ function Home({ setUser, user, setLogin }) {
             >
               <Dialog.Overlay className="fixed inset-0" />
             </Transition.Child>
-
-            {/* This element is to trick the browser into centering the modal contents. 
-            <span
-              className="inline-block h-screen my-10"
+           <span
+              className="inline-block h-screen align-middle"
               aria-hidden="true"
             >
               &#8203;
             </span>
-          */}
             <Transition.Child
               as={Fragment}
               enter="ease-out duration-300"
-              enterFrom="opacity-0 scale-95"
-              enterTo="opacity-100 scale-100"
+              enterFrom="-translate-y-20 scale-95"
+              enterTo="translate-y-0 scale-100"
               leave="ease-in duration-200"
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <div className="inline-block w-full max-w-xl p-10 overflow-hidden text-left transition-all transform bg-white shadow-xl rounded-3xl md:rounded-lg">
-                <Dialog.Title
-                  as="h3"
-                  className="text-lg font-medium leading-6 text-gray-900 mb-4"
-                >
-                  Add Item
-                </Dialog.Title>
+              <div className="inline-block w-full max-w-lg overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-3xl md:rounded-xl">
+                <div className="flex justify-between items-center">
+                  <Dialog.Title
+                    as="h3"
+                    className="text-lg font-medium leading-6 p-5 text-gray-900"
+                  >
+                    Add Item
+                  </Dialog.Title>
+                  <IoMdClose className="cursor-pointer w-6 h-6 mr-4"  onClick={ closeModal }/>
+                </div>
+                <div className="border-t border-gray-300"></div>
+                <div className="py-5 px-5 md:px-10">
                 <div>
                   <label for="userName">Site</label>
                   <br></br>
                   <input
-                    className="w-full mt-1 border border-gray-300 px-2 py-1 focus:outline-none focus:ring focus:border-blue-300 rounded"
+                    className="w-full mt-1 border px-2 py-1 rounded"
                     id="ipSiteName"
                     type="text"
                   ></input>
@@ -152,7 +172,7 @@ function Home({ setUser, user, setLogin }) {
                   <label for="password">Password</label>
                   <br></br>
                   <input
-                    className="w-full mt-1 border border-gray-300 px-2 py-1 focus:outline-none focus:ring focus:border-blue-300 rounded"
+                    className="w-full mt-1 border px-2 py-1 rounded"
                     id="ipPassword"
                     type="password"
                   ></input>
@@ -161,11 +181,12 @@ function Home({ setUser, user, setLogin }) {
                 <div className="mt-4">
                   <button
                     type="button"
-                    className="inline-flex justify-center px-4 py-2 mt-2 text-sm font-medium text-white bg-blue-900 rounded-full md:rounded-md hover:bg-blue-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
+                    className="inline-flex justify-center px-4 py-2 my-2 text-sm font-medium text-white bg-blue-900 rounded-full md:rounded-md hover:bg-blue-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
                     onClick={addItem}
                   >
                     Add Item
                   </button>
+                </div>
                 </div>
               </div>
             </Transition.Child>
